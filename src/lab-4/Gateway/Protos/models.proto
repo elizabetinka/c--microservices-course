@@ -1,0 +1,109 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcApi";
+
+package models;
+
+import "types/money.proto";
+import "google/protobuf/timestamp.proto";
+
+message AddProduct {
+  string name = 1;
+  google.type.Money price = 2;
+}
+
+message Product {
+  int64 id = 1;
+  string name = 2;
+  google.type.Money price = 3;
+}
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_CREATED = 1;
+  ORDER_STATUS_PROCESSING = 2;
+  ORDER_STATUS_COMPLETED = 3;
+  ORDER_STATUS_CANCELLED = 4;
+}
+
+enum HistoryType {
+    HISTORY_TYPE_UNSPECIFIED = 0;
+    HISTORY_TYPE_CREATED = 1;
+    HISTORY_TYPE_ITEM_ADDED = 2;
+    HISTORY_TYPE_ITEM_REMOVED = 3;
+    HISTORY_TYPE_STATE_CHANGED = 4;
+}
+
+message AddOrder {
+  google.protobuf.Timestamp created_at = 1;
+  string created_by = 2;
+}
+
+message Order {
+  int64  id = 1;
+  OrderStatus state = 2;
+  google.protobuf.Timestamp createdAt = 3;
+  string createdBy = 4;
+}
+
+message AddItem {
+  int64 order_id = 1;
+  int64 product_id = 2;
+  int32 quantity = 3;
+}
+
+message OrderItem {
+  int64 order_id = 1;
+  int64 product_id = 2; 
+  int32 quantity = 3; 
+  bool deleted = 4;
+  int64 id = 5;
+  bool is_null = 6;
+}
+
+message RemoveItem {
+  int64 order_id = 1; 
+  int64 product_id = 2; 
+  int32 quantity = 3;
+}
+
+message CreateOrderPayload {
+  int64 order_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  string created_by=3;
+}
+
+message ItemAddedPayload {
+  int64 order_id = 1; 
+  int64 product_id = 2;
+  int32 quantity = 3;
+}
+
+message ItemRemovedPayload {
+  int64 order_id = 1;
+  int64 product_id = 2;
+  int32 quantity = 3;
+}
+
+message StateChangedPayload {
+  int64 order_id = 1; 
+  OrderStatus order_status = 2;
+}
+
+message Payload {
+  oneof data
+  {
+    CreateOrderPayload  create_order_payload = 5;
+    ItemAddedPayload    item_added_payload = 6;
+    ItemRemovedPayload  item_removed_payload = 7;
+    StateChangedPayload state_changed_payload = 8;
+  }
+}
+
+message HistoryItem {
+  int64 history_item_id = 1;
+  int64 order_id = 2;
+  google.protobuf.Timestamp created_at = 3; 
+  HistoryType type = 4;
+  Payload payload = 5;
+}

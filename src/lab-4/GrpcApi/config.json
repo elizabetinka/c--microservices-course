@@ -1,0 +1,30 @@
+﻿{
+  "Server":{
+    "ConfigurationServerPath": "http://localhost:8081",
+    "PageSize": 5
+  },
+  "Configuration":{
+    "UpdateIntervalSec": 5
+  },
+  "Persistence": {
+    "Postgres": {
+      "Host": "localhost",
+      "Port": 5433,
+      "Database": "postgres",
+      "Username": "postgres",
+      "Password": "postgres"
+    }
+  },
+  "Kafka": {
+    "Host": "localhost:8001",
+    "Producer": {
+      "Topic": "order_creation"
+    },
+    "Consumer": {
+      "Topic": "order_processing",
+      "Group": "processing-service",
+      "InstanceId": "processing-service-1",
+      "BufferSize": 1
+    }
+  }
+}

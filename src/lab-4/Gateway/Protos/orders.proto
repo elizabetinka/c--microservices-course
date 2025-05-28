@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcApi";
+
+package orderService;
+
+import "models.proto";
+
+service OrderService {
+  rpc CreateOrders (CreateOrdersRequest) returns (CreateOrdersResponse);
+  rpc CreateItems (CreateItemsRequest) returns (CreateItemsResponse);
+  rpc DeleteItems (DeleteItemsRequest) returns (DeleteItemsResponse);
+  rpc OrdersToProcessing (OrdersToProcessingRequest) returns (OrdersToProcessingResponse);
+  rpc OrdersToCompleted (OrdersToCompletedRequest) returns (OrdersToCompletedResponse);
+  rpc OrdersToCancelled (OrdersToCancelledRequest) returns (OrdersToCancelledResponse);
+  rpc GetHistoryItems (GetHistoryItemsRequest) returns (GetHistoryItemsResponse);
+}
+
+message CreateOrdersRequest {
+  repeated models.AddOrder orders = 1;
+}
+
+message CreateOrdersResponse {
+  repeated models.Order orders = 1;
+}
+
+message CreateItemsRequest {
+  repeated models.AddItem items = 1;
+}
+
+message CreateItemsResponse {
+  repeated models.OrderItem items = 1;
+}
+
+message DeleteItemsRequest {
+  repeated models.RemoveItem items = 1;
+}
+
+message DeleteItemsResponse {
+  bool success = 1;
+}
+
+message OrdersToProcessingRequest {
+  repeated int64 orders_id = 1;
+}
+
+message OrdersToProcessingResponse {
+  bool success = 1;
+}
+
+message OrdersToCompletedRequest {
+  repeated int64 orders_id = 1;
+}
+
+message OrdersToCompletedResponse {
+  bool success = 1;
+}
+message OrdersToCancelledRequest {
+  repeated int64 orders_id = 1;
+}
+
+message OrdersToCancelledResponse {
+  bool success = 1;
+}
+
+message GetHistoryItemsRequest {
+  int64 order_id = 1;
+  repeated models.HistoryType types = 2;
+}
+
+message GetHistoryItemsResponse {
+  repeated models.HistoryItem items = 1;
+}

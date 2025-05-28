@@ -1,0 +1,9 @@
+﻿{
+  "Server":{
+    "ConfigurationServerPath": "http://localhost:8080",
+    "PageSize": 5
+  },
+  "Configuration":{
+    "UpdateIntervalSec": 5
+  }
+}

@@ -1,0 +1,5 @@
+﻿{
+  "GrpcClient":{
+    "Address": "http://localhost:5044"
+  }
+}

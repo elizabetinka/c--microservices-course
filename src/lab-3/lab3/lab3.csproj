@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\lab-2\Task3\Task3.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="config.json" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+﻿volumes:
+  postgres_data_1:
+  postgres_data_2:
+services:
+  postgres:
+    image: postgres:latest
+    container_name: lab-2-tools-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5434:5434"
+    restart: unless-stopped
+    networks:
+      - configuration-service-network
+    volumes:
+      - postgres_data_1:/var/lib/postgresql/data
+  
+  postgres_db:
+    container_name: task-postgres
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5433"
+    networks:
+      - configuration-service-network
+    volumes:
+      - postgres_data_2:/var/lib/postgresql/data
+  
+  configuration-service:
+    image: ghcr.io/is-csms-y26/lab-2-tools:master
+    platform: linux/amd64
+    container_name: configuration-service
+    networks:
+      - configuration-service-network
+    ports:
+      - '8081:8081'
+    environment:
+      Persistence__Postgres__Host: postgres
+
+networks:
+  configuration-service-network:
+    driver: bridge
